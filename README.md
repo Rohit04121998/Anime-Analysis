@@ -52,6 +52,8 @@ To get started with this project, follow the steps below:
 ANILIST_USER=YOUR_USERNAME_HERE
 ```
 
+4. Set data and logging paths in the `settings.yml` file or leave as it is.
+
 ## Folder Structure 📁
 
 ```plaintext
@@ -69,7 +71,7 @@ Anime-Analysis/
 │
 ├── src/                         # Source code directory
 │   ├── __init__.py
-│   ├── anilist_api.py           # API requests and extraction logic
+│   ├── utils.py           # API requests and extraction logic
 │   ├── data_processor.py        # Data processing logic
 │   ├── save_data.py             # File save/load logic
 │   ├── logger.py                # Logging configuration
