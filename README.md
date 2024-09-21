@@ -1,5 +1,7 @@
 # Anime Odyssey: A Data-Driven Exploration of My Favorites 📊🎥
 
+![My Image](assets\background-image.jpg)
+
 Welcome to the Anime Analysis repository! This project leverages data from the Anilist GraphQL API to provide insights into anime lists, focusing on various statuses such as COMPLETED, CURRENT, and PLANNING. With this tool, you can explore and analyze your anime preferences effectively!
 
 ## Motivation 💪
