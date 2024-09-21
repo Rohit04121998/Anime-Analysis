@@ -48,7 +48,7 @@ To get started with this project, follow the steps below:
 - Go to `Settings -> Account` or click [here](https://anilist.co/settings/account).
 - Create a `.env` file in the main directory and add the following:
 
-```env
+```ini
 ANILIST_USER=YOUR_USERNAME_HERE
 ```
 
