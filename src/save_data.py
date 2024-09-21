@@ -1,8 +1,7 @@
-# src/io/save_data.py
-import os
 import json
-import pandas as pd
 import logging
+import os
+
 import yaml
 
 
@@ -15,6 +14,10 @@ def load_config():
 config = load_config()
 json_dir = config["paths"]["json_dir"]
 csv_dir = config["paths"]["csv_dir"]
+
+# Ensure directories exist
+os.makedirs(json_dir, exist_ok=True)
+os.makedirs(csv_dir, exist_ok=True)
 
 
 def save_json(data, filename):
