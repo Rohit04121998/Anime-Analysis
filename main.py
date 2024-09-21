@@ -1,11 +1,12 @@
-# main.py
 import logging
-from src.anilist_api import make_request, extract_entries
-from src.data_processor import process_metadata, process_data
-from src.save_data import save_json, save_csv
-from src.logger import setup_logging
-from dotenv import load_dotenv
 import os
+
+from dotenv import load_dotenv
+
+from src.data_processor import process_data, process_metadata
+from src.logger import setup_logging
+from src.save_data import save_csv, save_json
+from src.utils import extract_entries, make_request
 
 # Load environment variables from .env
 load_dotenv()
