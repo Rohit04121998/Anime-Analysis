@@ -1,0 +1,5 @@
+# config/settings.yml
+paths:
+  json_dir: ./data/json/
+  csv_dir: ./data/csv/
+  log_file: ./logs/app.log
