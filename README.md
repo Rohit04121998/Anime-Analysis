@@ -33,14 +33,14 @@ To get started with this project, follow the steps below:
 1. Clone the repository:
 
 ```bash
-  git clone https://github.com/Rohit04121998/Anime-Analysis.git
-  cd Anime-Analysis
+git clone https://github.com/Rohit04121998/Anime-Analysis.git
+cd Anime-Analysis
 ```
 
 2. Install the required libraries:
 
 ```bash
-  pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 3. Get your Anilist username:
@@ -88,7 +88,7 @@ Anime-Analysis/
 To run the analysis, simply execute the main script:
 
 ```bash
-  python main.py
+python main.py
 ```
 
 This will trigger the data extraction and processing workflows. Follow any on-screen prompts to customize your queries.
