@@ -1,5 +1,6 @@
-# src/utils/logger.py
 import logging
+import os
+
 from yaml import safe_load
 
 
@@ -11,6 +12,10 @@ def setup_logging():
         config = safe_load(f)
 
     log_file = config["paths"]["log_file"]
+    log_dir = os.path.dirname(log_file)
+
+    # Ensure log directory exists
+    os.makedirs(log_dir, exist_ok=True)
 
     logging.basicConfig(
         level=logging.INFO,
