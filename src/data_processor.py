@@ -1,6 +1,6 @@
-# src/processor/data_processor.py
 import pandas as pd
-from src.anilist_api import extract_values, item_generator
+
+from src.utils import extract_values, item_generator
 
 
 def process_metadata(entries):
