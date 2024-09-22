@@ -23,7 +23,7 @@ def make_request(query):
         return data
     except requests.exceptions.RequestException as e:
         logging.error(f"API request failed: {e}")
-        return {"error": str(e)}  # Ensure it returns a dict with error message
+        return {"error": str(e)}
 
 
 def extract_entries(data):
