@@ -41,20 +41,17 @@ def fetch_and_save_data(anilist_user, anilist_user_default):
             metadata_response = make_request(metadata_query)
             data_response = make_request(data_query)
 
-            # Check if the username was invalid
             if "error" in metadata_response:
                 logging.warning(f"Invalid username: {anilist_user}, switching to default user: {anilist_user_default}")
                 st.warning(f"Username '{anilist_user}' not found, using default username '{anilist_user_default}'.")
                 anilist_user = anilist_user_default
 
-                # Re-run the queries with the default username
                 metadata_query = metadata_query_template.format(anilist_user=anilist_user, status=status)
                 data_query = data_query_template.format(anilist_user=anilist_user, status=status)
 
                 metadata_response = make_request(metadata_query)
                 data_response = make_request(data_query)
 
-            # Check for errors in the response with the default username
             if "error" in metadata_response:
                 logging.error(f"Failed to fetch data for both usernames. Error: {metadata_response['error']}")
                 st.error(f"Failed to fetch data for both usernames. Error: {metadata_response['error']}")
