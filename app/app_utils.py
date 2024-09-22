@@ -74,7 +74,7 @@ def fetch_and_save_data(anilist_user, anilist_user_default):
             save_csv(merged_df, csv_file_path)
             data_frames.append(merged_df)
 
-        return data_frames  # Return the list of CSV file paths
+        return data_frames, anilist_user
     except Exception as e:
         logging.error(f"An error occurred: {e}")
         return None
