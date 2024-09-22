@@ -21,13 +21,21 @@ anilist_user = anilist_user_input if anilist_user_input else anilist_user_defaul
 if st.button("Fetch Data"):
     if anilist_user:
         st.write(f"Fetching data for user: {anilist_user}...")
-        csv_files = fetch_and_save_data(anilist_user, anilist_user_default)
+        data_frames = fetch_and_save_data(anilist_user, anilist_user_default)
 
-        if csv_files:
+        if data_frames:
             st.success("Data has been fetched successfully!")
-            for file in csv_files:
-                with open(file, "rb") as f:
-                    st.download_button(label=f"Download {file}", data=f, file_name=file, mime="text/csv")
+
+            for i, df in enumerate(data_frames):
+                status = ["COMPLETED", "PLANNING", "CURRENT"][i]  # Adjust based on your statuses
+                csv = df.to_csv(index=False).encode("utf-8")  # Convert DataFrame to CSV
+
+                st.download_button(
+                    label=f"Download Merged Data ({status})",
+                    data=csv,
+                    file_name=f"anilist_merged_{status}.csv",
+                    mime="text/csv",
+                )
         else:
             st.error("An error occurred while fetching the data.")
     else:
