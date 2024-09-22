@@ -42,7 +42,8 @@ def process_data(entries):
     data_df["mean_score"] = extract_values(entries, "meanScore")
     data_df["description"] = extract_values(entries, "description")
     data_df["duration"] = extract_values(entries, "duration")
-    data_df["genres"] = list(item_generator(entries, "genres"))
+    genres_list = list(item_generator(entries, "genres"))
+    data_df["genres"] = [", ".join(genres) for genres in genres_list]
     data_df["season"] = extract_values(entries, "season")
     data_df["year_released"] = pd.to_numeric(extract_values(entries, "seasonYear"), errors="coerce")
 
