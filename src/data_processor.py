@@ -33,7 +33,7 @@ def process_data(entries):
             "year_released",
         ]
     )
-    # Extract values for data fields (media details)
+
     data_df["media_id"] = extract_values(entries, "id")
     data_df["title_in_romaji"] = extract_values(entries, "romaji")
     data_df["title_in_english"] = extract_values(entries, "english")
@@ -47,5 +47,4 @@ def process_data(entries):
     data_df["season"] = extract_values(entries, "season")
     data_df["year_released"] = pd.to_numeric(extract_values(entries, "seasonYear"), errors="coerce")
 
-    # Extraction logic similar to earlier
     return data_df
