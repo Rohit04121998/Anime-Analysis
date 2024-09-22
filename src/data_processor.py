@@ -44,5 +44,13 @@ def process_data(entries):
     data_df["genres"] = list(item_generator(entries, "genres"))
     data_df["year_released"] = extract_values(entries, "seasonYear")
 
+    # Convert year_released to numeric, handling strings
+    data_df["year_released"] = pd.to_numeric(
+        data_df["year_released"], errors="coerce"
+    )  # Convert to numeric, invalids become NaN
+
+    # Convert year_released to datetime (keeping NaT for nulls)
+    data_df["year_released"] = pd.to_datetime(data_df["year_released"].astype("Int64"), format="%Y", errors="coerce")
+
     # Extraction logic similar to earlier
     return data_df
