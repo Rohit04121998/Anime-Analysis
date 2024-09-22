@@ -1,4 +1,4 @@
-# Anime Odyssey: A Data-Driven Exploration of My Favorites 📊🎥
+# Anime Odyssey: A Data-Driven Exploration of My Favorites
 
 ![My Image](https://github.com/Rohit04121998/Anime-Analysis/blob/main/assets/background-image.jpg)
 
