@@ -1,12 +1,14 @@
 import logging
 
+import streamlit as st
+
 from src.data_processor import process_data, process_metadata
 from src.queries import data_query_template, metadata_query_template
 from src.save_data import save_csv, save_json
 from src.utils import extract_entries, make_request
 
 
-def fetch_and_save_data(anilist_user):
+def fetch_and_save_data(anilist_user, anilist_user_default):
     """
     Fetches and saves data from AniList for a given user.
 
@@ -34,6 +36,19 @@ def fetch_and_save_data(anilist_user):
 
             metadata_response = make_request(metadata_query)
             data_response = make_request(data_query)
+
+            # Check if the username was invalid
+            if "error" in metadata_response:
+                logging.warning(f"Invalid username: {anilist_user}, switching to default user: {anilist_user_default}")
+                anilist_user = anilist_user_default
+                st.warning(f"Username '{anilist_user}' not found, using default username '{anilist_user_default}'.")
+
+                # Re-run the queries with the default username
+                metadata_query = metadata_query_template.format(anilist_user=anilist_user, status=status)
+                data_query = data_query_template.format(anilist_user=anilist_user, status=status)
+
+                metadata_response = make_request(metadata_query)
+                data_response = make_request(data_query)
 
             metadata_entries = extract_entries(metadata_response)
             data_entries = extract_entries(data_response)
