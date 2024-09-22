@@ -21,7 +21,7 @@ anilist_user = anilist_user_input if anilist_user_input else anilist_user_defaul
 if st.button("Fetch Data"):
     if anilist_user:
         st.write(f"Fetching data for user: {anilist_user}...")
-        data_frames = fetch_and_save_data(anilist_user, anilist_user_default)
+        data_frames, anilist_user = fetch_and_save_data(anilist_user, anilist_user_default)
 
         if data_frames:
             st.success("Data has been fetched successfully!")
@@ -31,9 +31,9 @@ if st.button("Fetch Data"):
                 csv = df.to_csv(index=False).encode("utf-8")  # Convert DataFrame to CSV
 
                 st.download_button(
-                    label=f"Download Merged Data ({status})",
+                    label=f"Download {anilist_user}'s ({status} anime data)",
                     data=csv,
-                    file_name=f"anilist_merged_{status}.csv",
+                    file_name=f"anilist_{anilist_user}_{status}_anime.csv",
                     mime="text/csv",
                 )
         else:
