@@ -46,6 +46,6 @@ if st.button("Fetch Data"):
 
 st.markdown(
     """
-    Don't know your Anilist username? You can find it on your profile page on [Anilist](https://anilist.co/settings/account) under **Profile Settings**.
+    Don't know your Anilist username? You can find it in your settings page on [Anilist](https://anilist.co/settings/account) under **Profile Settings**.
     """
 )
