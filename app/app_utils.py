@@ -12,7 +12,7 @@ from src.save_data import save_csv, save_json
 from src.utils import extract_entries, make_request
 
 
-def fetch_and_save_data(anilist_user, anilist_user_default):
+def fetch_and_save_data(anilist_user, anilist_user_default, selected_statuses):
     """
     Fetches and saves data from AniList for a given user.
 
@@ -29,8 +29,9 @@ def fetch_and_save_data(anilist_user, anilist_user_default):
     Raises:
         Exception: If an error occurs during the data fetching or processing.
     """
-    statuses = ["COMPLETED", "PLANNING", "CURRENT"]
+    statuses = selected_statuses
     data_frames = []
+
     try:
         for status in statuses:
             logging.info(f"Fetching data for status: {status}")
