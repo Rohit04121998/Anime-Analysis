@@ -29,6 +29,8 @@ This practice has piqued my interest in how my perceived anime preferences align
 
 ## Getting Started 🚀
 
+If you want to just fetch your data without doung any changes, then click [here](https://anime-analysis.streamlit.app). Otherwise follow the below instructions.
+
 To get started with this project, follow the steps below:
 
 1. Clone the repository:
@@ -99,7 +101,7 @@ To store files locally, simply execute the main script:
 python main.py
 ```
 
-If you wish to just run the code and not do any changes, simply execute the following script:
+To run the streamlit app, execute the following script:
 
 ```bash
 streamlit run app/streamlit_app.py
