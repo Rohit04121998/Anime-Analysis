@@ -19,23 +19,26 @@ selected_statuses = st.multiselect("Select the list you want to fetch:", status_
 
 if st.button("Fetch Data"):
     if anilist_user:
-        st.write(f"Fetching data for user: {anilist_user} for statuses: {', '.join(selected_statuses)}...")
-        data_frames, anilist_user = fetch_and_save_data(anilist_user, anilist_user_default, selected_statuses)
-
-        if data_frames:
-            st.success("Data has been fetched successfully!")
-
-            for i, df in enumerate(data_frames):
-                status = selected_statuses[i]
-                csv = df.to_csv(index=False).encode("utf-8")
-
-                st.download_button(
-                    label=f"Download {anilist_user}'s ({status}) anime data",
-                    data=csv,
-                    file_name=f"anilist_{anilist_user}_{status}_anime.csv",
-                    mime="text/csv",
-                )
+        if not selected_statuses:
+            st.error("Please select at least one status to fetch data.")
         else:
-            st.error("An error occurred while fetching the data.")
+            st.write(f"Fetching data for user: {anilist_user} for statuses: {', '.join(selected_statuses)}...")
+            data_frames, anilist_user = fetch_and_save_data(anilist_user, anilist_user_default, selected_statuses)
+
+            if data_frames:
+                st.success("Data has been fetched successfully!")
+
+                for i, df in enumerate(data_frames):
+                    status = selected_statuses[i]
+                    csv = df.to_csv(index=False).encode("utf-8")
+
+                    st.download_button(
+                        label=f"Download {anilist_user}'s ({status}) anime data",
+                        data=csv,
+                        file_name=f"anilist_{anilist_user}_{status}_anime.csv",
+                        mime="text/csv",
+                    )
+            else:
+                st.error("An error occurred while fetching the data.")
     else:
         st.warning("Please provide a valid Anilist username.")
