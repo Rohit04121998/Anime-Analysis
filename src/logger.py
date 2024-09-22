@@ -14,7 +14,6 @@ def setup_logging():
     log_file = config["paths"]["log_file"]
     log_dir = os.path.dirname(log_file)
 
-    # Ensure log directory exists
     os.makedirs(log_dir, exist_ok=True)
 
     logging.basicConfig(
