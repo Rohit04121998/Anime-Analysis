@@ -14,11 +14,11 @@ def make_request(query):
         response.raise_for_status()
         data = response.json()
 
-        if "errors" in data:
-            error_message = data["errors"][0]["message"]
-            if "User not found" in error_message:
-                logging.error(f"Anilist API error: {error_message}")
-                return {"error": "User not found"}
+        # if "errors" in data:
+        #     error_message = data["errors"][0]["message"]
+        #     if "User not found" in error_message:
+        #         logging.error(f"Anilist API error: {error_message}")
+        #         return {"error": "User not found"}
 
         return data
     except requests.exceptions.RequestException as e:
