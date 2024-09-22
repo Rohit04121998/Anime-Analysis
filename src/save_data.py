@@ -5,7 +5,6 @@ import os
 import yaml
 
 
-# Load config paths from settings.yml
 def load_config():
     with open("./config/settings.yml", "r") as f:
         return yaml.safe_load(f)
@@ -15,7 +14,7 @@ config = load_config()
 json_dir = config["paths"]["json_dir"]
 csv_dir = config["paths"]["csv_dir"]
 
-# Ensure directories exist
+
 os.makedirs(json_dir, exist_ok=True)
 os.makedirs(csv_dir, exist_ok=True)
 
