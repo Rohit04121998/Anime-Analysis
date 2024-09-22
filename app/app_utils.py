@@ -1,6 +1,10 @@
 import logging
+import os
+import sys
 
 import streamlit as st
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/..")
 
 from src.data_processor import process_data, process_metadata
 from src.queries import data_query_template, metadata_query_template
@@ -26,7 +30,7 @@ def fetch_and_save_data(anilist_user, anilist_user_default):
         Exception: If an error occurs during the data fetching or processing.
     """
     statuses = ["COMPLETED", "PLANNING", "CURRENT"]
-    csv_files = []  # List to store CSV file paths
+    data_frames = []
     try:
         for status in statuses:
             logging.info(f"Fetching data for status: {status}")
@@ -62,9 +66,9 @@ def fetch_and_save_data(anilist_user, anilist_user_default):
             merged_df = metadata_df.merge(data_df, on="media_id")
             csv_file_path = f"anilist_merged_{status}.csv"
             save_csv(merged_df, csv_file_path)
-            csv_files.append(csv_file_path)  # Add CSV file path to the list
+            data_frames.append(merged_df)
 
-        return csv_files  # Return the list of CSV file paths
+        return data_frames  # Return the list of CSV file paths
     except Exception as e:
         logging.error(f"An error occurred: {e}")
         return None
