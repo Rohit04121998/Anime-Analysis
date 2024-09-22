@@ -60,6 +60,10 @@ ANILIST_USER=YOUR_USERNAME_HERE
 
 ```plaintext
 Anime-Analysis/
+├── app/                         # Streamlit app directory
+│   ├── __init__.py
+│   ├── streamlit_app.py         # Main Streamlit app file
+│   └── app_utils.py             # Functions for fetching and processing data
 │
 ├── config/                      # Configuration directory
 │   └── settings.yml             # YAML config file for paths and settings
@@ -82,7 +86,7 @@ Anime-Analysis/
 ├── .env                         # Environment variables for paths
 ├── .gitignore                   # Optional: Git ignore file for not tracking certain files
 ├── requirements.txt             # Required Python libraries
-├── main.py                      # Main script to run the project
+├── main.py                      # Main script to run the project (Optional. Run to store files locally)
 └── README.md                    # Project documentation
 ```
 
