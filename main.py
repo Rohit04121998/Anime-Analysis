@@ -84,9 +84,11 @@ for status in statuses:
         metadata_df = process_metadata(metadata_entries)
         data_df = process_data(data_entries)
 
-        # Save CSV files
-        save_csv(metadata_df, f"anilist_metadata_{status}.csv")
-        save_csv(data_df, f"anilist_data_{status}.csv")
+        # Merge metadata and data DataFrames on media_id
+        merged_df = metadata_df.merge(data_df, on="media_id")
+
+        # Save merged CSV file
+        save_csv(merged_df, f"anilist_merged_{status}.csv")
 
     except Exception as e:
         logging.error(f"An error occurred: {e}")
