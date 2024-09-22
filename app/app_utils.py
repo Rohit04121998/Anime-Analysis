@@ -44,8 +44,8 @@ def fetch_and_save_data(anilist_user, anilist_user_default):
             # Check if the username was invalid
             if "error" in metadata_response:
                 logging.warning(f"Invalid username: {anilist_user}, switching to default user: {anilist_user_default}")
-                anilist_user = anilist_user_default
                 st.warning(f"Username '{anilist_user}' not found, using default username '{anilist_user_default}'.")
+                anilist_user = anilist_user_default
 
                 # Re-run the queries with the default username
                 metadata_query = metadata_query_template.format(anilist_user=anilist_user, status=status)
