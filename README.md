@@ -74,7 +74,7 @@ Anime-Analysis/
 │   ├── utils.py                 # API requests and extraction logic
 │   ├── data_processor.py        # Data processing logic
 │   ├── save_data.py             # File save/load logic
-│   ├── logger.py                # Logging configuration
+│   └── logger.py                # Logging configuration
 │
 ├── .env                         # Environment variables for paths
 ├── .gitignore                   # Optional: Git ignore file for not tracking certain files
