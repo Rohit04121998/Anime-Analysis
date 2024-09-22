@@ -71,7 +71,7 @@ Anime-Analysis/
 │
 ├── src/                         # Source code directory
 │   ├── __init__.py
-│   ├── utils.py           # API requests and extraction logic
+│   ├── utils.py                 # API requests and extraction logic
 │   ├── data_processor.py        # Data processing logic
 │   ├── save_data.py             # File save/load logic
 │   ├── logger.py                # Logging configuration
