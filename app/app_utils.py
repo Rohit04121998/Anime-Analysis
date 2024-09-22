@@ -54,6 +54,12 @@ def fetch_and_save_data(anilist_user, anilist_user_default):
                 metadata_response = make_request(metadata_query)
                 data_response = make_request(data_query)
 
+            # Check for errors in the response with the default username
+            if "error" in metadata_response:
+                logging.error(f"Failed to fetch data for both usernames. Error: {metadata_response['error']}")
+                st.error(f"Failed to fetch data for both usernames. Error: {metadata_response['error']}")
+                return None
+
             metadata_entries = extract_entries(metadata_response)
             data_entries = extract_entries(data_response)
 
