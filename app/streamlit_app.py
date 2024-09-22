@@ -8,7 +8,7 @@ anilist_user_default = os.getenv("ANILIST_USER")
 
 st.title("Anime Analysis")
 st.write(
-    "Welcome to the Anime Analysis Streamlit App! This app allows you to fetch and analyze your Anilist anime data."
+    "Welcome to the Anime Analysis Streamlit App! This app allows you to fetch and analyze your Anilist anime data. For more information, visit the [GitHub repository](https://github.com/Rohit04121998/Anime-Analysis)."
 )
 
 anilist_user_input = st.text_input("Enter your Anilist username (leave blank to use default):", "")
