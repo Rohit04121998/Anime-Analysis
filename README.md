@@ -24,7 +24,8 @@ This practice has piqued my interest in how my perceived anime preferences align
 - Extract metadata and actual data about anime lists using GraphQL queries.
 - Categorize anime based on user-defined statuses.
 - Create separate DataFrames for each status and query combination.
-- Visualize anime data trends and statistics.
+- Allow users to select multiple statuses for data fetching.
+- Error handling to default to a specified username if the input username is invalid.
 
 ## Getting Started 🚀
 
@@ -92,13 +93,17 @@ Anime-Analysis/
 
 ## Usage 🛠️
 
-To run the analysis, simply execute the main script:
+To store files locally, simply execute the main script:
 
 ```bash
 python main.py
 ```
 
-This will trigger the data extraction and processing workflows. Follow any on-screen prompts to customize your queries.
+If you wish to just run the code and not do any changes, simply execute the following script:
+
+```bash
+streamlit run app/streamlit_app.py
+```
 
 ## Data Extraction 📥
 
