@@ -6,13 +6,21 @@ import requests
 def make_request(query):
     """
     Sends a GraphQL request to Anilist API and returns the JSON response.
-    Includes error handling.
+    Includes error handling for 'User not found'.
     """
     url = "https://graphql.anilist.co"
     try:
         response = requests.post(url, json={"query": query})
         response.raise_for_status()
-        return response.json()
+        data = response.json()
+
+        if "errors" in data:
+            error_message = data["errors"][0]["message"]
+            if "User not found" in error_message:
+                logging.error(f"Anilist API error: {error_message}")
+                return {"error": "User not found"}
+
+        return data
     except requests.exceptions.RequestException as e:
         logging.error(f"API request failed: {e}")
         raise
