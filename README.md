@@ -54,6 +54,8 @@ ANILIST_USER=YOUR_USERNAME_HERE
 
 4. Set data and logging paths in the `settings.yml` file or leave as it is.
 
+5. (Optional) Change the `entries` values as required in `queries.py` file to make a custom query template. If changed, `data_process.py` file should be changed accordingly.
+
 ## Folder Structure 📁
 
 ```plaintext
@@ -74,6 +76,7 @@ Anime-Analysis/
 │   ├── utils.py                 # API requests and extraction logic
 │   ├── data_processor.py        # Data processing logic
 │   ├── save_data.py             # File save/load logic
+│   ├── queries.py               # Query templates
 │   └── logger.py                # Logging configuration
 │
 ├── .env                         # Environment variables for paths
