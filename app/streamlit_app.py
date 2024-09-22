@@ -23,7 +23,8 @@ if st.button("Fetch Data"):
             st.error("Please select at least one status to fetch data.")
         else:
             st.write(f"Fetching data for user: {anilist_user} for statuses: {', '.join(selected_statuses)}...")
-            data_frames, anilist_user = fetch_and_save_data(anilist_user, anilist_user_default, selected_statuses)
+            with st.spinner("Fetching data..."):
+                data_frames, anilist_user = fetch_and_save_data(anilist_user, anilist_user_default, selected_statuses)
 
             if data_frames:
                 st.success("Data has been fetched successfully!")
@@ -33,7 +34,7 @@ if st.button("Fetch Data"):
                     csv = df.to_csv(index=False).encode("utf-8")
 
                     st.download_button(
-                        label=f"Download {anilist_user}'s ({status}) anime data",
+                        label=f"⬇️ Download {anilist_user}'s ({status}) anime data",
                         data=csv,
                         file_name=f"anilist_{anilist_user}_{status}_anime.csv",
                         mime="text/csv",
@@ -42,3 +43,9 @@ if st.button("Fetch Data"):
                 st.error("An error occurred while fetching the data.")
     else:
         st.warning("Please provide a valid Anilist username.")
+
+st.markdown(
+    """
+    Don't know your Anilist username? You can find it on your profile page on [Anilist](https://anilist.co/settings/account) under **Profile Settings**.
+    """
+)
