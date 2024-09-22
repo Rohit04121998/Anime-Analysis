@@ -1,5 +1,4 @@
 import os
-
 import streamlit as st
 from app_utils import fetch_and_save_data
 from dotenv import load_dotenv
@@ -22,7 +21,7 @@ anilist_user = anilist_user_input if anilist_user_input else anilist_user_defaul
 if st.button("Fetch Data"):
     if anilist_user:
         st.write(f"Fetching data for user: {anilist_user}...")
-        csv_files = fetch_and_save_data(anilist_user)
+        csv_files = fetch_and_save_data(anilist_user, anilist_user_default)
 
         if csv_files:
             st.success("Data has been fetched successfully!")
