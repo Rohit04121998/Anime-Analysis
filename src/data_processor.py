@@ -7,11 +7,9 @@ def process_metadata(entries):
     """
     Processes metadata into a Pandas DataFrame (mediaId, score).
     """
-    metadata_list = []
-    for entry in entries:
-        metadata_list.append(pd.DataFrame({"media_id": [entry["mediaId"]], "score": [entry["score"]]}))
-    metadata_df = pd.concat(metadata_list, ignore_index=True)
-    return metadata_df
+    return pd.DataFrame.from_records(entries, columns=["mediaId", "score"]).rename(
+        columns={"mediaId": "media_id"},
+    )
 
 
 def process_data(entries):
