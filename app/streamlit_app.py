@@ -1,34 +1,40 @@
 import os
-
 import streamlit as st
+import pandas as pd
 from app_utils import fetch_and_save_data
+from explore_stats import basic_stats, anime_watched_by_year, episodes_watched_by_year, rating_distribution, top_genres
 from dotenv import load_dotenv
 
 load_dotenv()
 anilist_user_default = os.getenv("ANILIST_USER")
 
 
+if "data_fetched" not in st.session_state:
+    st.session_state["data_fetched"] = False
+if "data_frames" not in st.session_state:
+    st.session_state["data_frames"] = None
+
+
 st.sidebar.title("Navigation Menu")
 st.sidebar.markdown("Navigate through the app:")
 navigation = st.sidebar.radio("Go to:", ["Home", "Fetch Data", "Explore Stats", "Settings", "About"])
+
 
 if navigation == "Home":
     st.markdown("<h1 style='text-align: center; color: #FF4500;'>🎥 Anime Odyssey 🎥</h1>", unsafe_allow_html=True)
     st.image("https://wallpapers.com/images/featured-full/anime-4k-uvwsx2m7duh51ale.jpg", use_column_width=True)
 
     st.write(
-        "Welcome to the **Anime Odyssey**! This app allows you to fetch and analyze your AniList anime data. This is a work in progress and more features will be added soon. For more information, visit the [GitHub repository](https://github.com/Rohit04121998/Anime-Analysis)."
+        "Welcome to the **Anime Odyssey**! This app allows you to fetch and analyze your AniList anime data. "
+        "This is a work in progress and more features will be added soon. For more information, visit the "
+        "[GitHub repository](https://github.com/Rohit04121998/Anime-Analysis)."
     )
 
 elif navigation == "Fetch Data":
     st.markdown("### Fetch Data from AniList 📡")
     st.write(
-        "You can fetch your anime data from AniList by providing your AniList username and selecting the list you want to fetch. As of now you can fetch onlu your anime statuses:"
+        "You can fetch your anime data from AniList by providing your AniList username and selecting the list you want to fetch."
     )
-    st.write("- **COMPLETED**: Anime that you have completed watching.")
-    st.write("- **PLANNING**: Anime that you are planning to watch.")
-    st.write("- **CURRENT**: Anime that you are currently watching.")
-
     anilist_user_input = st.text_input(
         "Enter your Anilist username (leave blank to use default):",
         "",
@@ -53,11 +59,12 @@ elif navigation == "Fetch Data":
 
                 if data_frames:
                     st.success("Data has been fetched successfully!")
+                    st.session_state["data_fetched"] = True
+                    st.session_state["data_frames"] = data_frames
 
                     for i, df in enumerate(data_frames):
                         status = selected_statuses[i]
                         csv = df.to_csv(index=False).encode("utf-8")
-
                         st.download_button(
                             label=f"⬇️ Download {anilist_user}'s ({status}) anime data",
                             data=csv,
@@ -76,10 +83,40 @@ elif navigation == "Fetch Data":
     )
 
 elif navigation == "Explore Stats":
-    st.markdown("### Explore Your Anime Stats")
-    st.write(
-        "This feature is coming soon! You'll be able to visualize your anime data with interactive charts and graphs."
-    )
+    if not st.session_state["data_fetched"]:
+        st.warning("Please fetch the data first before exploring stats.")
+    else:
+        st.markdown("### Explore Your Anime Stats")
+        data_frames = st.session_state["data_frames"]
+        combined_df = pd.concat(data_frames, ignore_index=True)
+
+        analysis_options = st.sidebar.multiselect(
+            "Select the analysis you want to explore:",
+            [
+                "Basic Stats",
+                "Anime Watched by Year",
+                "Episodes Watched by Year",
+                "Average Rating",
+                "Rating Distribution",
+                "Top Genres",
+                "Genre Distribution",
+                "Top Longest Anime",
+                "Anime by Source",
+                "Seasons Watched",
+            ],
+        )
+
+        if "Basic Stats" in analysis_options:
+            basic_stats(combined_df)
+        if "Anime Watched by Year" in analysis_options:
+            anime_watched_by_year(combined_df)
+        if "Episodes Watched by Year" in analysis_options:
+            episodes_watched_by_year(combined_df)
+        if "Rating Distribution" in analysis_options:
+            rating_distribution(combined_df)
+        if "Top Genres" in analysis_options:
+            top_genres(combined_df)
+
 
 elif navigation == "Settings":
     st.markdown("### Settings")
@@ -97,15 +134,7 @@ elif navigation == "About":
     st.markdown("### About Anime Analysis App")
     st.write(
         "The **Anime Analysis App** fetches and analyzes data from AniList. "
-        "It allows users to download their anime data in CSV format and visualize their anime stats."
+        "It allows users to download their anime lists and explore a wide range of statistics, including watch times, "
+        "ratings, and more. You can find the code for this app on GitHub."
     )
-    st.markdown(
-        """
-        **Key Features:**
-        - Fetch AniList anime data for different statuses.
-        - Download anime data as CSV files.
-        - Explore stats and insights (upcoming feature).
-        
-        For more details and updates, check out the [GitHub repository](https://github.com/Rohit04121998/Anime-Analysis).
-        """
-    )
+    st.markdown("Developed by Rohit Veeradhi")
