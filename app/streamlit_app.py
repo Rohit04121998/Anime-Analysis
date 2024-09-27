@@ -10,7 +10,6 @@ from explore_stats import (
     average_rating,
     basic_stats,
     episodes_watched_by_year,
-    genre_distribution,
     rating_distribution,
     seasons_watched,
     top_genres,
@@ -25,6 +24,8 @@ if "data_fetched" not in st.session_state:
     st.session_state["data_fetched"] = False
 if "data_frames" not in st.session_state:
     st.session_state["data_frames"] = None
+if "show_download_buttons" not in st.session_state:
+    st.session_state["show_download_buttons"] = True
 
 
 st.sidebar.title("Navigation Menu")
@@ -55,7 +56,7 @@ elif navigation == "Fetch Data":
     )
     anilist_user = anilist_user_input if anilist_user_input else anilist_user_default
 
-    status_options = ["COMPLETED", "PLANNING", "CURRENT"]
+    status_options = ["COMPLETED", "CURRENT"]
     selected_statuses = st.multiselect("Select the list you want to fetch:", status_options)
 
     if st.button("Fetch Data"):
@@ -63,6 +64,7 @@ elif navigation == "Fetch Data":
             if not selected_statuses:
                 st.error("Please select at least one status to fetch data.")
             else:
+                print(selected_statuses)
                 st.write(f"Fetching data for user: {anilist_user} for statuses: {', '.join(selected_statuses)}...")
                 with st.spinner("Fetching data..."):
                     data_frames, anilist_user = fetch_and_save_data(
@@ -71,20 +73,24 @@ elif navigation == "Fetch Data":
 
                 if data_frames:
                     st.success("Data has been fetched successfully!")
+
                     st.session_state["data_fetched"] = True
                     st.session_state["data_frames"] = data_frames
 
-                    for i, df in enumerate(data_frames):
-                        status = selected_statuses[i]
-                        csv = df.to_csv(index=False).encode("utf-8")
-                        st.download_button(
-                            label=f"⬇️ Download {anilist_user}'s ({status}) anime data",
-                            data=csv,
-                            file_name=f"anilist_{anilist_user}_{status}_anime.csv",
-                            mime="text/csv",
-                        )
+                    if st.session_state["show_download_buttons"]:
+                        for i, df in enumerate(data_frames):
+                            status = selected_statuses[i]
+                            csv = df.to_csv(index=False).encode("utf-8")
+                            st.download_button(
+                                label=f"⬇️ Download {anilist_user}'s ({status}) anime data",
+                                data=csv,
+                                file_name=f"anilist_{anilist_user}_{status}_anime.csv",
+                                mime="text/csv",
+                            )
+
                 else:
-                    st.error("An error occurred while fetching the data.")
+                    st.error("No data found for the selected status. Please check the username or status selected.")
+
         else:
             st.warning("Please provide a valid Anilist username.")
 
@@ -100,45 +106,52 @@ elif navigation == "Explore Stats":
     else:
         st.header("📊 Explore Your Anime Statistics")
 
-        data_frames = st.session_state["data_frames"]
-        combined_df = pd.concat(data_frames, ignore_index=True)
-
-        analysis_options = st.sidebar.multiselect(
-            "Select the analysis you want to explore:",
-            [
-                "Basic Stats",
-                "Anime Watched by Year",
-                "Episodes Watched by Year",
-                "Average Rating",
-                "Rating Distribution",
-                "Top Genres",
-                "Genre Distribution",
-                "Top Longest Anime",
-                "Anime by Source",
-                "Seasons Watched",
-            ],
+        st.write(
+            "This includes only your completed and currently watching anime. This is a work in progress and more features will be added!"
         )
 
-        if "Basic Stats" in analysis_options:
-            basic_stats(combined_df)
-        if "Anime Watched by Year" in analysis_options:
-            anime_watched_by_year(combined_df)
-        if "Episodes Watched by Year" in analysis_options:
-            episodes_watched_by_year(combined_df)
-        if "Average Rating" in analysis_options:
-            average_rating(combined_df)
-        if "Rating Distribution" in analysis_options:
-            rating_distribution(combined_df)
-        if "Top Genres" in analysis_options:
-            top_genres(combined_df)
-        if "Genre Distribution" in analysis_options:
-            genre_distribution(combined_df)
-        if "Top Longest Anime" in analysis_options:
-            top_longest_anime(combined_df)
-        if "Anime by Source" in analysis_options:
-            anime_by_source(combined_df)
-        if "Seasons Watched" in analysis_options:
-            seasons_watched(combined_df)
+        data_frames = st.session_state["data_frames"]
+        combined_df = pd.concat(data_frames, ignore_index=True)
+        filtered_df = combined_df[combined_df["status"] != "PLANNING"]
+
+        if filtered_df.empty:
+            st.warning(
+                "You have fetched only planning anime. Please fecth eiher currenly watching anime, completed anime or both as well. "
+            )
+        else:
+            analysis_options = st.sidebar.multiselect(
+                "Select the analysis you want to explore:",
+                [
+                    "Basic Stats",
+                    "Anime Watched by Year",
+                    "Episodes Watched by Year",
+                    "Average Rating",
+                    "Rating Distribution",
+                    "Top Genres",
+                    "Top Longest Anime",
+                    "Anime by Source",
+                    "Seasons Watched",
+                ],
+            )
+
+            if "Basic Stats" in analysis_options:
+                basic_stats(filtered_df)
+            if "Anime Watched by Year" in filtered_df:
+                anime_watched_by_year(filtered_df)
+            if "Episodes Watched by Year" in analysis_options:
+                episodes_watched_by_year(filtered_df)
+            if "Average Rating" in analysis_options:
+                average_rating(filtered_df)
+            if "Rating Distribution" in analysis_options:
+                rating_distribution(filtered_df)
+            if "Top Genres" in analysis_options:
+                top_genres(filtered_df)
+            if "Top Longest Anime" in analysis_options:
+                top_longest_anime(filtered_df)
+            if "Anime by Source" in analysis_options:
+                anime_by_source(filtered_df)
+            if "Seasons Watched" in analysis_options:
+                seasons_watched(filtered_df)
 
 
 elif navigation == "Settings":
