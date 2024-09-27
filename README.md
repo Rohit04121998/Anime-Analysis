@@ -2,7 +2,7 @@
 
 ![My Image](https://github.com/Rohit04121998/Anime-Analysis/blob/main/assets/background-image.jpg)
 
-Welcome to the Anime Analysis repository! This project leverages data from the Anilist GraphQL API to provide insights into anime lists, focusing on various statuses such as COMPLETED, CURRENT, and PLANNING. With this tool, you can explore and analyze your anime preferences effectively!
+Welcome to the Anime Analysis repository! This project leverages data from the Anilist GraphQL API to provide insights into anime lists, focusing on various statuses such as COMPLETED and CURRENT. With this tool, you can explore and analyze your anime preferences effectively!
 
 ## Motivation 💪
 
@@ -137,7 +137,6 @@ The project generates separate DataFrames for each status:
 
 - Completed: Contains data on all completed anime.
 - Current: Tracks anime currently being watched.
-- Planning: Lists anime that are planned for future viewing.
 
 Each DataFrame includes essential fields like titles, genres, and average scores, making it easy to analyze your anime collection.
 
