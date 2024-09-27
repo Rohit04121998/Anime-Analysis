@@ -50,25 +50,22 @@ def rating_distribution(df):
 def top_genres(df):
     """Displays the top genres based on the number of anime watched."""
     st.header("🎬 Top Genres")
-    genre_df = df["genres"].explode().value_counts().head(10).reset_index()
-    genre_df.columns = ["Genre", "Count"]
-    fig = px.bar(genre_df, x="Genre", y="Count")
-    st.plotly_chart(fig)
 
+    df["genres"] = df["genres"].str.split(", ")
 
-def genre_distribution(df):
-    """Visualizes the distribution of anime genres."""
-    st.header("🎭 Genre Distribution")
-    genre_df = df["genres"].explode().value_counts().reset_index()
-    genre_df.columns = ["Genre", "Count"]
-    fig = px.pie(genre_df, names="Genre", values="Count", title="Genre Distribution")
+    genre_df = df["genres"].explode()
+
+    genre_count = genre_df.value_counts().head(10).reset_index()
+    genre_count.columns = ["Genre", "Count"]
+
+    fig = px.bar(genre_count, x="Genre", y="Count", title="Top 10 Genres")
     st.plotly_chart(fig)
 
 
 def top_longest_anime(df):
     """Displays the top longest anime by episode count."""
     st.header("📏 Top Longest Anime (by Episode Count)")
-    longest_anime = df.nlargest(10, "episodes")[["title", "episodes"]]
+    longest_anime = df.nlargest(10, "episodes")[["title_in_romaji", "title_in_english", "episodes"]]
     st.table(longest_anime)
 
 
