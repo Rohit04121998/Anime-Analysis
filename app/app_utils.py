@@ -68,6 +68,7 @@ def fetch_and_save_data(anilist_user, anilist_user_default, selected_statuses):
             data_df = process_data(data_entries)
 
             merged_df = metadata_df.merge(data_df, on="media_id")
+
             csv_file_path = f"anilist_merged_{status}.csv"
             save_csv(merged_df, csv_file_path)
             data_frames.append(merged_df)
