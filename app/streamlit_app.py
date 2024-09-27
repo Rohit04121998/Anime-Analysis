@@ -1,9 +1,21 @@
 import os
-import streamlit as st
+
 import pandas as pd
+import streamlit as st
 from app_utils import fetch_and_save_data
-from explore_stats import basic_stats, anime_watched_by_year, episodes_watched_by_year, rating_distribution, top_genres
 from dotenv import load_dotenv
+from explore_stats import (
+    anime_by_source,
+    anime_watched_by_year,
+    average_rating,
+    basic_stats,
+    episodes_watched_by_year,
+    genre_distribution,
+    rating_distribution,
+    seasons_watched,
+    top_genres,
+    top_longest_anime,
+)
 
 load_dotenv()
 anilist_user_default = os.getenv("ANILIST_USER")
@@ -84,9 +96,10 @@ elif navigation == "Fetch Data":
 
 elif navigation == "Explore Stats":
     if not st.session_state["data_fetched"]:
-        st.warning("Please fetch the data first before exploring stats.")
+        st.warning("Please fetch your data first by going to the 'Fetch Data' tab.")
     else:
-        st.markdown("### Explore Your Anime Stats")
+        st.header("📊 Explore Your Anime Statistics")
+
         data_frames = st.session_state["data_frames"]
         combined_df = pd.concat(data_frames, ignore_index=True)
 
@@ -112,10 +125,20 @@ elif navigation == "Explore Stats":
             anime_watched_by_year(combined_df)
         if "Episodes Watched by Year" in analysis_options:
             episodes_watched_by_year(combined_df)
+        if "Average Rating" in analysis_options:
+            average_rating(combined_df)
         if "Rating Distribution" in analysis_options:
             rating_distribution(combined_df)
         if "Top Genres" in analysis_options:
             top_genres(combined_df)
+        if "Genre Distribution" in analysis_options:
+            genre_distribution(combined_df)
+        if "Top Longest Anime" in analysis_options:
+            top_longest_anime(combined_df)
+        if "Anime by Source" in analysis_options:
+            anime_by_source(combined_df)
+        if "Seasons Watched" in analysis_options:
+            seasons_watched(combined_df)
 
 
 elif navigation == "Settings":
