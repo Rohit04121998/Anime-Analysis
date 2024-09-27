@@ -64,7 +64,6 @@ elif navigation == "Fetch Data":
             if not selected_statuses:
                 st.error("Please select at least one status to fetch data.")
             else:
-                print(selected_statuses)
                 st.write(f"Fetching data for user: {anilist_user} for statuses: {', '.join(selected_statuses)}...")
                 with st.spinner("Fetching data..."):
                     data_frames, anilist_user = fetch_and_save_data(
